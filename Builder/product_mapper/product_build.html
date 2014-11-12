@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>Product Map</title>
+	<meta name="description" content="Mapping product break-outs">
+  
+</head>
+
+<body onload="init()">
+	<!-- Start script/css definitions -->
+	<script type="text/javascript" src="js/product_map.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>  
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="css/jquery-ui-1.10.4.custom/css/ui-darkness/jquery-ui-1.10.4.custom.css">
+	<!-- End script/css definitions -->
+
+	<!-- Place the image you are editing here-->
+	<img id="productImage" src="img/example_product.png" style="visibility:hidden;position:absolute;">
+	
+			<!-- Center all following elements -->
+		<div style="width:850px;margin-left:auto;margin-right:auto;">
+		
+		<div id="outlineBorder" style="border:1px solid;border-color: #CAC1B8;border-radius:4px;"><br/>
+			<!-- Canvas definition -->
+			<canvas style="border-radius:4px;border:3px solid; padding-left: 0;padding-right: 0;margin-left: auto;margin-right: auto;display: block;" id="canvas">
+			</canvas>
+					
+			<!-- Button set that lets the user choose which editing tool to use (Rectangle, circle) -->
+			<div id="radio" style='position:absolute;'>
+				<input type="radio" id="radio1" name="radio" checked="checked">
+				<label for="radio1">Rectangle</label>
+				<input type="radio" id="radio2" name="radio">
+				<label for="radio2">Circle</label>
+			</div>
+			
+			<!-- Part name button, populated automatically and allows editing -->
+			<button id="partNameButton" style="position:absolute;"><span class="ui-button-text">Part Name:  <input type="text" id="partNameText" style="width:120px;"></span></button>
+				
+			<br/>
+	
+			<!-- System information box -->
+			<div id="systemMessage" class="ui-state-error ui-corner-all" style="width: 750px; margin-left: auto;margin-right: auto;display: block;"></div>
+					
+			<!-- Editing control panel (Add part, complete part, undo action, submit to server) -->
+			<p>
+				<div style="text-align: center;">
+					<button id="createPartButton" onclick="fireStart();"><span class="ui-button-text">Add Part</span></button>
+					<button id="donePartButton" onclick="addPart();"><span class="ui-button-text">Done</span></button>
+					<button id="undoAction" onclick="undoAction();"><span class="ui-button-text">Undo Select</span></button>
+					<button id="submitFinished" onclick="confirmDialog();"><span class="ui-button-text">Submit Map</span></button>
+				</div>
+			</p>
+			
+			<!-- Pop up dialog(s) definition(s), these will be hidden unless called upon -->
+			<div id="dialog" title="Are you sure?" style="text-align: center;">
+	  			<p>
+	  				Are you sure you want to submit this product?<br/><br/>
+	  				<button id="pushToServer" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="$('#dialog').dialog('close');submit();"><span class="ui-button-text">SUBMIT</span></button>  				
+	 				<button id="cancel" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="$('#dialog').dialog('close');"><span class="ui-button-text">CANCEL</span></button>  				
+	  			</p>
+			</div>
+		</div>
+		<!-- Accordian definition - this will start blank and be populated via javascript method addItemToAccordian() -->
+	</div>
+	<p>
+		<div id="accordion" style="margin-left: auto;margin-right: auto;display: block;width:750px;"></div>
+	</p>
+
+</body>
+</html>
